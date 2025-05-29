@@ -3,9 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HelloWorld</title>
+    <title>Somto - Graphic Designer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Nunito:wght@800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="/Assest/AvatarHeroPage.svg">
 </head>
 <body>
-    <h1>TO BE MADE!</h1>
+    <div id="custom-cursor"></div>
+    <header id="header">
+        <div class="container">
+            <a href="#hero" class="logo interactive-element">
+                <img src="Assest/Asset 1.png" alt="SMT Designs Logo"> </a>
+            <nav id="navbar">
+                <ul>
+                    <li><a href="#hero" class="nav-link active interactive-element">HOME</a></li>
+                    <li><a href="#work" class="nav-link interactive-element">WORK</a></li>
+                    <li><a href="#about" class="nav-link interactive-element">ABOUT</a></li>
+                    <li><a href="#contact" class="nav-link interactive-element">CONTACT</a></li>
+                </ul>
+            </nav>
+            <button id="menu-toggle" aria-label="Open navigation menu" class="interactive-element">
+                <span class="menu-line line-1"></span>
+                <span class="menu-line line-2"></span>
+                <span class="menu-line line-3"></span>
+            </button>
+        </div>
+    </header>
+
+    <section id="hero" class="section">
+        <div class="container hero-container">
+            <div class="hero-image-container animate-on-load delay-2">
+                <img src="Assest/AvatarHeroPage.svg" alt="Somto Character Illustration" class="hero-main-image"> <div class="blob blob1"></div>
+                <div class="blob blob2"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="animate-on-load">I AM <span class="highlight-name">SOMTO</span></h1>
+                <h2 class="animate-on-load delay-1">GRAPHIC DESIGNER</h2>
+                <p class="animate-on-load delay-2">A creative designer transforming data and ideas into playful, line-based visual stories that connect and evoke emotion.</p>
+                <a href="#work" class="btn btn-primary animate-on-load delay-3 interactive-element">Works</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="proficiency" class="section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">PROFICIENCY</h2>
+            <p class="section-subtitle animate-on-scroll delay-1">APPS I WORK WITH!</p>
+            <div class="proficiency-grid">
+                <div class="proficiency-item animate-on-scroll delay-2 interactive-element">
+                    <div class="app-icon">
+                        <div class="app-icon-fill"></div>
+                        <span class="app-icon-text">Ps</span>
+                    </div>
+                    <h3>Adobe Photoshop</h3>
+                </div>
+                <div class="proficiency-item animate-on-scroll delay-3 interactive-element">
+                    <div class="app-icon">
+                        <div class="app-icon-fill"></div>
+                        <span class="app-icon-text">Id</span>
+                    </div>
+                    <h3>Adobe InDesign</h3>
+                </div>
+                <div class="proficiency-item animate-on-scroll delay-4 interactive-element">
+                    <div class="app-icon">
+                        <div class="app-icon-fill"></div>
+                        <span class="app-icon-text">Ai</span>
+                    </div>
+                    <h3>Adobe Illustrator</h3>
+                </div>
+                <div class="proficiency-item animate-on-scroll delay-5 interactive-element">
+                    <div class="app-icon">
+                        <div class="app-icon-fill"></div>
+                        <span class="app-icon-text">Ae</span>
+                    </div>
+                    <h3>Adobe AfterEffects</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" class="section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">WORKS</h2>
+            <p class="section-subtitle animate-on-scroll delay-1">STUFF I HAVE WORKED ON</p>
+
+            <div class="work-category animate-on-scroll delay-2" data-category-name="Datavisuals">
+                <h3 class="work-category-title">DATAVISUALS</h3>
+                <div class="carousel-wrapper">
+                    <div class="works-carousel" id="datavisuals-carousel">
+                        <div class="work-item interactive-element" data-full-src="/Assest/Asset 1Dataviz.svg"><img src="/Assest/Asset 1Dataviz.svg" alt="Datavisual Project 1"><div class="work-item-overlay"><h4>Project Title 1</h4><p>Datavisuals</p></div></div>
+                        <div class="work-item interactive-element" data-full-src="/Assest/Asset 2Dataviz.svg"><img src="/Assest/Asset 2Dataviz.svg" alt="Datavisual Project 2"><div class="work-item-overlay"><h4>Project Title 2</h4><p>Datavisuals</p></div></div>
+                        <div class="work-item interactive-element" data-full-src="/Assest/Asset 3Dataviz.svg"><img src="/Assest/Asset 3Dataviz.svg" alt="Datavisual Project 3"><div class="work-item-overlay"><h4>Project Title 3</h4><p>Datavisuals</p></div></div>
+                        <div class="work-item interactive-element" data-full-src="/Assest/Asset 4Dataviz.svg"><img src="/Assest/Asset 4Dataviz.svg" alt="Datavisual Project 4"><div class="work-item-overlay"><h4>Project Title 4</h4><p>Datavisuals</p></div></div>
+                        <div class="work-item interactive-element" data-full-src="/Assest/Asset 5Dataviz.svg"><img src="/Assest/Asset 5Dataviz.svg" alt="Datavisual Project 5"><div class="work-item-overlay"><h4>Project Title 5</h4><p>Datavisuals</p></div></div>
+                    </div>
+                    <button class="carousel-arrow prev-arrow interactive-element" aria-label="Previous" data-carousel-id="datavisuals-carousel">&lt;</button>
+                    <button class="carousel-arrow next-arrow interactive-element" aria-label="Next" data-carousel-id="datavisuals-carousel">&gt;</button>
+                </div>
+            </div>
+
+          <div class="work-category animate-on-scroll delay-3" data-category-name="Persona">
+                <h3 class="work-category-title">PERSONA</h3>
+                 <div class="carousel-wrapper">
+                    <div class="works-carousel" id="persona-carousel">
+                        <div class="work-item interactive-element" data-full-src="/Assest/persona.png"><img src="/Assest/persona.png" alt="Persona Project 1"><div class="work-item-overlay"><h4>Persona Project 1</h4><p>Persona</p></div></div>
+                        <div class="work-item interactive-element" data-full-src="https://placehold.co/800x600/FFBF00/333333?text=Persona+2+Full&font=roboto"><img src="https://placehold.co/350x250/FFBF00/333333?text=Persona+2&font=roboto" alt="Persona Project 2"><div class="work-item-overlay"><h4>Persona Project 2</h4><p>Persona</p></div></div>
+                        <div class="work-item interactive-element" data-full-src="https://placehold.co/800x600/FFBF00/333333?text=Persona+3+Full&font=roboto"><img src="https://placehold.co/350x250/FFBF00/333333?text=Persona+3&font=roboto" alt="Persona Project 3"><div class="work-item-overlay"><h4>Persona Project 3</h4><p>Persona</p></div></div>
+                        <div class="work-item interactive-element" data-full-src="https://placehold.co/800x600/FFBF00/333333?text=Persona+4+Full&font=roboto"><img src="https://placehold.co/350x250/FFBF00/333333?text=Persona+4&font=roboto" alt="Persona Project 4"><div class="work-item-overlay"><h4>Persona Project 4</h4><p>Persona</p></div></div>
+                        <div class="work-item interactive-element" data-full-src="https://placehold.co/800x600/FFBF00/333333?text=Persona+5+Full&font=roboto"><img src="https://placehold.co/350x250/FFBF00/333333?text=Persona+5&font=roboto" alt="Persona Project 5"><div class="work-item-overlay"><h4>Persona Project 5</h4><p>Persona</p></div></div>
+                        <div class="work-item interactive-element" data-full-src="https://placehold.co/800x600/FFBF00/333333?text=Persona+6+Full&font=roboto"><img src="https://placehold.co/350x250/FFBF00/333333?text=Persona+6&font=roboto" alt="Persona Project 6"><div class="work-item-overlay"><h4>Persona Project 6</h4><p>Persona</p></div></div>
+                    </div>
+                    <button class="carousel-arrow prev-arrow interactive-element" aria-label="Previous" data-carousel-id="persona-carousel">&lt;</button>
+                    <button class="carousel-arrow next-arrow interactive-element" aria-label="Next" data-carousel-id="persona-carousel">&gt;</button>
+                </div>
+            </div>
+
+            <div class="work-category animate-on-scroll delay-4" data-category-name="Logo">
+                <h3 class="work-category-title">LOGO</h3>
+                <div class="carousel-wrapper">
+                    <div class="works-carousel" id="logo-carousel">
+                        <div class="work-item interactive-element" data-full-src="Assest/Asset 2Logo.svg"><img src="Assest/Asset 2Logo.svg" alt="Logo Project 1"><div class="work-item-overlay"><h4>Logo Project 1</h4><p>Logo</p></div></div>
+                        <div class="work-item interactive-element" data-full-src="Assest/Asset 3Logo.svg"><img src="Assest/Asset 3Logo.svg" alt="Logo Project 2"><div class="work-item-overlay"><h4>Logo Project 2</h4><p>Logo</p></div></div>
+                        <div class="work-item interactive-element" data-full-src="Assest/Asset 4Logo.svg"><img src="Assest/Asset 4Logo.svg" alt="Logo Project 3"><div class="work-item-overlay"><h4>Project Title 3</h4><p>Logo</p></div></div>
+                        <div class="work-item interactive-element" data-full-src="Assest/Asset 5Logo.svg"><img src="Assest/Asset 5Logo.svg" alt="Logo Project 4"><div class="work-item-overlay"><h4>Project Title 4</h4><p>Logo</p></div></div>
+                         <div class="work-item interactive-element" data-full-src="https://placehold.co/800x600/FFBF00/333333?text=Logo+5+Full&font=roboto"><img src="https://placehold.co/350x250/FFBF00/333333?text=Logo+5&font=roboto" alt="Logo Project 5"><div class="work-item-overlay"><h4>Project Title 5</h4><p>Logo</p></div></div>
+                    </div>
+                    <button class="carousel-arrow prev-arrow interactive-element" aria-label="Previous" data-carousel-id="logo-carousel">&lt;</button>
+                    <button class="carousel-arrow next-arrow interactive-element" aria-label="Next" data-carousel-id="logo-carousel">&gt;</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="imageModal" class="modal">
+        <span class="modal-close-btn interactive-element">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <button class="modal-arrow modal-prev-arrow interactive-element" aria-label="Previous image">&lt;</button>
+        <button class="modal-arrow modal-next-arrow interactive-element" aria-label="Next image">&gt;</button>
+        <div id="modalCaption"></div>
+    </div>
+
+    <section id="about" class="section">
+        <div class="container about-container">
+            <div class="about-image-container animate-on-scroll">
+                <img src="https://placehold.co/300x300/3D2B1F/FFBF00?text=Somto&font=roboto" alt="Somto Photo Placeholder" class="about-photo">
+            </div>
+            <div class="about-content animate-on-scroll delay-1">
+                <h2 class="section-title">ABOUT ME</h2>
+                <h3 class="section-subtitle-small">Graphic Designer</h3>
+                <p>Hi there! I am Somto Chukura, a designer with a passion for the art of creative discovery and the magic of visual storytelling. Good design, to me, not only looks good but also makes you feel something and makes you curious and want to engage with it. My design philosophy is rooted in thinking outside the box, merging playfulness and creative imagination with laser-like attention to creating distinctive and effective work.</p>
+                <p>Skilled in Adobe Photoshop, Illustrator, InDesign, and After Effects, I thoroughly enjoy getting dynamic visuals underway. It's always my goal to create designs that are not only graphically interesting, but also connect on a level further, resonating positively and lingering in the memory.</p>
+                <p>I'm always refining my process, finding new sources of inspiration, and love taking observations of everyday life and breaking them down into compelling visual experiences. If you're searching for a designer who can bring a distinct voice and passion for innovative, emotionally intelligent design, I'd love to hear from you.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">CONTACT</h2>
+            <p class="section-subtitle animate-on-scroll delay-1">Contact me here!</p>
+            <form id="contact-form" class="animate-on-scroll delay-2">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required class="interactive-element">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required class="interactive-element"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary interactive-element">Send Message</button>
+            </form>
+            <div id="form-message" class="form-feedback-message"></div>
+        </div>
+    </section>
+
+    <footer class="section-footer">
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> SMT DESIGNS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
