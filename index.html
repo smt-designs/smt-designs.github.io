@@ -506,10 +506,10 @@
             requestAnimationFrame(gameLoop);
 
             // A. CURVE ANIMATION
-            const sway = Math.sin(time / 2000) * 10; 
-            els.stage.style.perspectiveOrigin = `${20 + sway}% 10%`;
+         
+            
             // NOTE: Using 60deg to match the Vector Design, but keeping the sway logic
-            els.road.style.transform = `rotateX(10deg) rotateZ(${sway / 2}deg)`;
+            els.road.style.transform = `rotateX(10deg)`;
 
 
             // B. PLAYER MOVEMENT
