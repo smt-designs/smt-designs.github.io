@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Park Spoor Noord - Vector Edition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- 1. CORE VARIABLES --- */
+        :root {
+            /* UI Colors */
+            --bg-color: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --text-color: #334155;
+            
+            /* Game Colors */
+            --sky-top: #bae6fd;
+            --sky-bottom: #e0f2fe;
+            --grass-light: #86efac;
+            --grass-dark: #4ade80;
+            --path-sand: #fde68a;
+            --path-border: #4b3f19;
+            
+            /* Action Colors */
+            --accent-blue: #3b82f6;
+            --accent-red: #ef4444;
+            --accent-green: #10b981;
+            
+            --font-main: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; touch-action: none; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- 2. CSS BACKGROUND (Clean Version) --- */
+        .world-background {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background: linear-gradient(to bottom, var(--sky-top) 0%, var(--sky-bottom) 60%, var(--grass-light) 60%);
+            overflow: hidden;
+        }
+
+        /* Clouds */
+        .cloud {
+            position: absolute;
+            background: #fff;
+            border-radius: 50px;
+            opacity: 0.9;
+            animation: floatCloud 20s linear infinite;
+        }
+        .cloud::after, .cloud::before {
+            content: ''; position: absolute; background: #fff; border-radius: 50%;
+        }
+        .c1 { width: 100px; height: 40px; top: 10%; left: 10%; }
+        .c1::after { width: 50px; height: 50px; top: -25px; left: 15px; }
+        .c1::before { width: 40px; height: 40px; top: -15px; left: 45px; }
+
+        .c2 { width: 120px; height: 50px; top: 20%; left: 70%; animation-duration: 25s; }
+        .c2::after { width: 60px; height: 60px; top: -30px; left: 20px; }
+        
+        @keyframes floatCloud {
+            from { transform: translateX(100vw); }
+            to { transform: translateX(-200px); }
+        }
+
+        /* Rolling Hills (Foreground) */
+        .hill {
+            position: absolute;
+            background: var(--grass-dark);
+            border-radius: 50% 50% 0 0;
+        }
+        .h1 { width: 150%; height: 40%; bottom: -10%; left: -25%; background: #4ade80; }
+        .h2 { width: 120%; height: 35%; bottom: -5%; right: -20%; background: #22c55e; }
+
+        /* --- 3. GAME STAGE --- */
+        .game-stage {
+            flex: 1;
+            position: relative;
+            perspective: 600px;
+            display: flex;
+            justify-content: center;
+            z-index: 1;
+            perspective-origin: 50% 50%;
+        }
+
+        /* 3D FLOATING TITLE */
+        .floating-title {
+            position: absolute;
+            top: 10%;
+            width: 100%;
+            text-align: center;
+            font-size: 5rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            /* Deep 3D Shadow Stack */
+            text-shadow: 
+                0 1px 0 #cccccc, 
+                0 2px 0 #c9c9c9, 
+                0 3px 0 #bbbbbb, 
+                0 4px 0 #b9b9b9, 
+                0 5px 0 #aaaaaa, 
+                0 6px 1px rgba(0,0,0,.1), 
+                0 0 5px rgba(0,0,0,.1), 
+                0 1px 3px rgba(0,0,0,.3), 
+                0 3px 5px rgba(0,0,0,.2), 
+                0 5px 10px rgba(0,0,0,.25),
+                0 10px 10px rgba(0,0,0,.2),
+                0 20px 20px rgba(0,0,0,.15);
+            z-index: 5;
+            pointer-events: none;
+            animation: float3D 4s ease-in-out infinite alternate;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes float3D {
+            0% { transform: translateY(0) rotateX(10deg); }
+            100% { transform: translateY(-20px) rotateX(5deg); }
+        }
+
+        /* THE PATH */
+        #road-container {
+            position: absolute;
+            bottom: -15%;
+            width: 300px;
+            height: 150%; 
+            background: var(--path-sand);
+            transform: rotateX(60deg);
+            transform-origin: bottom center;
+            transition: width 1s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-left: 6px solid #eab308;
+            border-right: 6px solid #eab308;
+            overflow: hidden;
+        }
+
+        /* Path Texture */
+        #road-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                radial-gradient(#d4d4d4 15%, transparent 16%),
+                radial-gradient(#e5e5e5 15%, transparent 16%);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            opacity: 0.3;
+            animation: moveTexture 0.5s linear infinite;
+        }
+
+        @keyframes moveTexture {
+            from { background-position: 0 0, 10px 10px; }
+            to { background-position: 0 40px, 10px 50px; }
+        }
+
+        /* COLORED ZONES */
+        .zone-layer {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .zone-layer.active { opacity: 1; }
+        
+        .zone-red {flex: 1; background: rgb(213, 214, 216); border-left: 2px dashed rgb(161, 161, 161);}
+        .zone-blue {flex: 1; background: rgb(80, 141, 240); border-left: 2px dashed rgb(108, 162, 248);  }
+
+        #road-container.wide { width: 600px; }
+
+        /* ENTITIES */
+        .entity {
+            position: absolute;
+            transform: translate(-50%, -100%) rotateX(-30deg) scale(1.5);
+            font-size: 40px;
+            z-index: 10;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2));
+            transition: left 0.1s linear;
+        }
+        
+        .fa-person-walking { color: #db2777; }
+        .fa-person-biking { color: #2563eb; }
+        
+        #player {
+            bottom: 10%; left: 50%; z-index: 20;
+        }
+        #player i { 
+            color: #f59e0b !important;
+            stroke: white; stroke-width: 2px;
+            filter: drop-shadow(0 0 10px white);
+        }
+
+        /* --- 4. UI PANELS --- */
+        .control-panel {
+            position: absolute;
+            bottom: 20px; right: 20px;
+            width: 320px;
+            background: var(--glass-bg);
+            border: 1px solid white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        h2 { font-size: 1.2rem; color: #1e293b; margin-bottom: 15px; }
+        .btn-group { display: flex; flex-direction: column; gap: 10px; }
+
+        button {
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            border-radius: 10px;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        button.active { background: #ecfdf5; border-color: var(--accent-green); color: var(--accent-green); }
+        
+        .reset-btn { margin-top: 15px; width: 100%; border: none; background: #f1f5f9; color: #64748b; }
+
+        .status-pill {
+            background: #fff; padding: 10px; border-radius: 8px; margin-top: 15px;
+            font-size: 0.85rem; line-height: 1.4; color: #475569; border-left: 4px solid #cbd5e1;
+        }
+
+        #intro {
+            position: fixed; inset: 0; z-index: 200;
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center;
+            transition: transform 0.5s ease;
+        }
+        #intro.hidden { transform: translateY(-100%); }
+        
+        .intro-box {
+            background: white; padding: 40px; border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            max-width: 500px;
+        }
+        .hero-title {
+            font-size: 2.5rem; color: var(--accent-blue); margin-bottom: 10px;
+            font-weight: 800; letter-spacing: -1px;
+        }
+        
+        .role-cards { display: flex; gap: 20px; margin-top: 30px; justify-content: center; }
+        .role-card {
+            background: #f8fafc; padding: 20px; border-radius: 15px; cursor: pointer;
+            border: 2px solid transparent; transition: all 0.2s;
+        }
+        .role-card:hover { border-color: var(--accent-blue); transform: scale(1.05); }
+        .role-icon { font-size: 3rem; margin-bottom: 10px; display: block; color: #64748b; }
+
+        #crash {
+            position: absolute; inset: 0; background: rgba(239,68,68,0.5);
+            z-index: 150; display: flex; align-items: center; justify-content: center;
+            font-size: 4rem; font-weight: 900; color: white; opacity: 0; pointer-events: none;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 600px) {
+            .control-panel { 
+                width: 94%; 
+                left: 3%; 
+                bottom: 10px; 
+                padding: 12px; 
+                gap: 5px;
+            }
+            
+            /* Compact Header on Mobile */
+            .control-panel h2 { 
+                font-size: 1rem; 
+                margin-bottom: 5px; 
+                text-align: center;
+            }
+
+            /* Buttons side-by-side on Mobile */
+            .btn-group { 
+                flex-direction: row; 
+            }
+            
+            button {
+                padding: 8px;
+                font-size: 0.75rem;
+                justify-content: center;
+                gap: 4px;
+                flex: 1; /* Make buttons equal width */
+            }
+            
+            .status-pill {
+                margin-top: 5px;
+                padding: 6px;
+                font-size: 0.7rem;
+            }
+
+            .reset-btn {
+                margin-top: 5px;
+                padding: 8px;
+            }
+
+            .role-cards { flex-direction: column; }
+            .floating-title { font-size: 2.5rem; top: 15%; } /* Smaller title on mobile */
+            
+            /* KEY FIX: Move player UP so UI doesn't cover it */
+            #player { bottom: 30%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. CSS BACKGROUND WORLD (Clean) -->
+    <div class="world-background">
+        <!-- Sky & Clouds -->
+        <div class="cloud c1"></div>
+        <div class="cloud c2"></div>
+        
+        <!-- Hills (Simple Park Look) -->
+        <div class="hill h1"></div>
+        <div class="hill h2"></div>
+    </div>
+
+    <!-- 2. GAME STAGE -->
+    <div class="game-stage" id="stage">
+        <div id="crash">CRASH!</div>
+
+        <!-- NEW 3D TITLE -->
+        <div class="floating-title">TEAM 8 PSN</div>
+
+        <!-- The Beige Path -->
+        <div id="road-container">
+            <!-- Overlay for Color Zones -->
+            <div class="zone-layer" id="zone-layer">
+                <div class="zone-red"></div>
+                <div class="zone-blue"></div>
+            </div>
+            
+            <!-- Player -->
+            <div id="player" class="entity"><i class="fa-solid fa-person-walking"></i></div>
+        </div>
+    </div>
+
+    <!-- 3. CONTROLS -->
+    <div class="control-panel">
+        <h2>Park Controls</h2>
+        <div class="btn-group">
+            <button id="btn-wide" onclick="toggleFeature('wide')">
+                <span>Verbreed Paden</span>
+                <i class="fa-solid fa-expand"></i>
+            </button>
+            <button id="btn-color" onclick="toggleFeature('color')">
+                <span>Voeg Kleur Toe</span>
+                <i class="fa-solid fa-paintbrush"></i>
+            </button>
+        </div>
+        
+        <div class="status-pill" id="status-msg">
+            Huidige situatie: Smal pad, gemengd verkeer.
+        </div>
+        <div class="status-pill">
+          Sleep van links naar rechts en vermijd tegenliggers.
+        </div>
+        
+        <button class="reset-btn" onclick="resetGame()">
+            <i class="fa-solid fa-rotate-left"></i> &nbsp; Stop / Terug
+        </button>
+    </div>
+
+    <!-- 4. INTRO SCREEN -->
+    <div id="intro">
+        <div class="intro-box">
+            <h1 class="hero-title">Park Spoor Noord</h1>
+            <p style="color: #64748b;">Kies je rol in de vector wereld.</p>
+            
+            <div class="role-cards">
+                <div class="role-card" onclick="startGame('walker')">
+                    <span class="role-icon"><i class="fa-solid fa-person-walking"></i></span>
+                    <strong>Wandelaar</strong>
+                </div>
+                <div class="role-card" onclick="startGame('sporter')">
+                    <span class="role-icon"><i class="fa-solid fa-person-biking"></i></span>
+                    <strong>Sporter</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* --- GAME ENGINE (Restored to User Specification) --- */
+        const game = {
+            active: false,
+            role: null, // 'walker' or 'sporter'
+            width: 300, // road width in px
+            colored: false,
+            playerX: 50, // Percentage 0-100
+            obstacles: [],
+            speed: 1.2, 
+            curve: 0, 
+            time: 0
+        };
+
+        const els = {
+            intro: document.getElementById('intro'),
+            stage: document.getElementById('stage'),
+            road: document.getElementById('road-container'),
+            player: document.getElementById('player'),
+            crash: document.getElementById('crash'),
+            status: document.getElementById('status-msg'),
+            btnWide: document.getElementById('btn-wide'),
+            btnColor: document.getElementById('btn-color'),
+            zones: document.getElementById('zone-layer')
+        };
+
+        // --- 1. SETUP ---
+        function startGame(role) {
+            game.role = role;
+            game.active = true;
+            game.obstacles = [];
+            document.querySelectorAll('.obstacle').forEach(e => e.remove());
+            
+            els.intro.classList.add('hidden');
+            
+            // Set Player Icon via FontAwesome
+            if (role === 'walker') {
+                els.player.innerHTML = '<i class="fa-solid fa-person-walking"></i>';
+            } else {
+                els.player.innerHTML = '<i class="fa-solid fa-person-biking"></i>';
+            }
+            
+            updateStatus();
+            
+            lastTime = performance.now();
+            requestAnimationFrame(gameLoop);
+            spawnLoop();
+        }
+
+        function resetGame() {
+            game.active = false;
+            els.intro.classList.remove('hidden');
+            document.querySelectorAll('.obstacle').forEach(e => e.remove());
+            game.obstacles = [];
+            
+            // Reset filters to default state (Optional, but clean)
+            game.width = 300; game.colored = false;
+            els.road.classList.remove('wide');
+            els.zones.classList.remove('active');
+            els.btnWide.classList.remove('active');
+            els.btnColor.classList.remove('active');
+            updateStatus();
+        }
+
+        function toggleFeature(type) {
+            if(type === 'wide') {
+                game.width = game.width === 300 ? 600 : 300;
+                els.road.classList.toggle('wide');
+                els.btnWide.classList.toggle('active');
+            }
+            if(type === 'color') {
+                game.colored = !game.colored;
+                els.zones.classList.toggle('active');
+                els.btnColor.classList.toggle('active');
+            }
+            updateStatus();
+        }
+
+        function updateStatus() {
+            let msg = "";
+            const isWide = game.width > 300;
+            const isColor = game.colored;
+
+            if(!isWide && !isColor) {
+                msg = "GEVAARLIJK: Smal pad, geen regels. Chaos!";
+            } else if (isWide && !isColor) {
+                msg = "BETER: Meer ruimte, maar mensen lopen nog steeds door elkaar.";
+            } else if (!isWide && isColor) {
+                msg = "RISICO: Iedereen kent zijn plek, maar het pad is te smal.";
+            } else {
+                msg = "VEILIG: Ruimte + Regels = Veiligheid.";
+            }
+            els.status.innerText = msg;
+        }
+
+        // --- 2. GAME LOOP ---
+        let lastTime = 0;
+        function gameLoop(time) {
+            if(!game.active) return;
+            const delta = time - lastTime;
+            lastTime = time;
+            
+            requestAnimationFrame(gameLoop);
+
+            // A. CURVE ANIMATION
+            const sway = Math.sin(time / 2000) * 30; 
+            els.stage.style.perspectiveOrigin = `${50 + sway}% 35%`;
+            // NOTE: Using 60deg to match the Vector Design, but keeping the sway logic
+            els.road.style.transform = `rotateX(60deg) rotateZ(${sway / 2}deg)`;
+
+
+            // B. PLAYER MOVEMENT
+            els.player.style.left = game.playerX + '%';
+
+            // C. OBSTACLE MOVEMENT
+            game.obstacles.forEach((obs, index) => {
+                obs.y += game.speed;
+                obs.el.style.top = obs.y + '%';
+                
+                // Scale effect for depth
+                let scale = 0.5 + (obs.y / 100);
+                obs.el.style.transform = `translate(-50%, -100%) rotateX(-30deg) scale(${scale})`;
+
+                // Collision Detection
+                if(obs.y > 85 && obs.y < 95) {
+                    const hitMargin = game.width === 300 ? 15 : 8; 
+                    if(Math.abs(game.playerX - obs.x) < hitMargin) {
+                        handleCrash();
+                    }
+                }
+
+                // Cleanup
+                if(obs.y > 120) {
+                    obs.el.remove();
+                    game.obstacles.splice(index, 1);
+                }
+            });
+        }
+
+        // --- 3. SPAWNER LOGIC (The AI) ---
+        function spawnLoop() {
+            if(!game.active) return;
+            setTimeout(spawnLoop, 800); 
+
+            const el = document.createElement('div');
+            el.classList.add('entity', 'obstacle');
+            
+            // Type logic: opposite of player
+            let typeRole = 'biker'; 
+            if(game.role === 'sporter') typeRole = 'walker';
+            if(Math.random() > 0.85) typeRole = typeRole === 'biker' ? 'walker' : 'biker';
+            
+            // Set Icon
+            if(typeRole === 'walker') {
+                el.innerHTML = '<i class="fa-solid fa-person-walking"></i>';
+            } else {
+                el.innerHTML = '<i class="fa-solid fa-person-biking"></i>';
+            }
+
+            els.road.appendChild(el);
+
+            // POSITION LOGIC (AI)
+            let spawnX = 50; 
+
+            if(game.colored) {
+                // STRICT ZONES
+                if(typeRole === 'walker') {
+                    spawnX = 5 + Math.random() * 35; // Red Zone
+                } else {
+                    spawnX = 60 + Math.random() * 35; // Blue Zone
+                }
+            } else {
+                // CHAOS LOGIC
+                spawnX = 5 + Math.random() * 90;
+            }
+
+            const obs = {
+                el: el,
+                x: spawnX,
+                y: -20,
+                type: typeRole
+            };
+            
+            el.style.left = spawnX + '%';
+            game.obstacles.push(obs);
+        }
+
+        // --- 4. CONTROLS ---
+        window.addEventListener('keydown', (e) => {
+            if(!game.active) return;
+            const step = 6;
+            if(e.key === 'ArrowLeft') game.playerX = Math.max(5, game.playerX - step);
+            if(e.key === 'ArrowRight') game.playerX = Math.min(95, game.playerX + step);
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if(!game.active) return;
+            const rect = els.road.getBoundingClientRect();
+            let relativeX = e.clientX - rect.left;
+            let percent = (relativeX / rect.width) * 100;
+            percent = Math.max(5, Math.min(95, percent));
+            game.playerX = percent;
+        });
+        
+        window.addEventListener('touchmove', (e) => {
+             if(!game.active) return;
+            const rect = els.road.getBoundingClientRect();
+            let relativeX = e.touches[0].clientX - rect.left;
+            let percent = (relativeX / rect.width) * 100;
+            percent = Math.max(5, Math.min(95, percent));
+            game.playerX = percent;
+        });
+
+        // --- 5. CRASH HANDLING ---
+        function handleCrash() {
+            els.crash.style.opacity = 1;
+            els.road.style.transform += ` translateX(${Math.random() * 20 - 10}px)`;
+            setTimeout(() => {
+                els.crash.style.opacity = 0;
+            }, 500);
+        }
+
+    </script>
+</body>
+</html>
