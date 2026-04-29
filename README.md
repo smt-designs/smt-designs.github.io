@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UX/UI Analyse & Next.js Implementatie - De Standaard Artikelen
 
-## Getting Started
+Dit project is een schoolopdracht voor de module **Visual Basics Websites en Apps**. Het doel van de opdracht is het analyseren van bestaande nieuwsartikelen van *De Standaard* op basis van UX/UI-principes en deze inzichten vervolgens toe te passen in een functionele Next.js webapplicatie.
 
-First, run the development server:
+## 🚀 Live Demo
+Bekijk de website hier: [vb-articles-chukurasomto.netlify.app](https://vb-articles-chukurasomto.netlify.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 UX/UI Analyse & Beslissingen
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Tijdens de eerste fase van het project heb ik drie artikelen geanalyseerd:
+1. **Dario Amodei (Silicon Valley)**
+2. **AI-Slop (Sociale Media)**
+3. **Vibecoding (AI-tools)**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Belangrijkste Inzichten & Verbeteringen:
 
-## Learn More
+- **Leesbaarheid & Witruimte:** In de originele PDF-bestanden stonden teksten vaak erg dicht op elkaar zonder tussenkopjes. In mijn implementatie heb ik met Tailwind CSS  gezorgd voor veel meer "ademruimte" tussen paragrafen, wat de leesbaarheid op schermen aanzienlijk verbetert.
+- **Visuele Hiërarchie:** Ik heb duidelijke, vette tussenkopjes (`font-extrabold`) toegevoegd om de tekst scanbaar te maken voor de lezer. Ook zijn labels zoals "DE TECHNOCRAAT" en "LEESTIJD" toegevoegd om direct context te bieden.
+- **Call-to-Action (CTA) Design:** De "Lees Ook" secties onderaan de artikelen zijn getransformeerd van platte tekst naar opvallende, interactieve kaarten. Deze reageren op de gebruiker via hover-effecten (border-color verandering en schaduw), wat aanzet tot doorklikken.
+- **Micro-interacties:** Alle knoppen en navigatielinks zijn voorzien van subtiele transities (`transition-all`, `duration-300`). Afbeeldingen zoomen licht in bij een hover-actie, wat zorgt voor een dynamische en responsieve gebruikerservaring.
+- **Performance & Media:** Er is gebruik gemaakt van het `next/image` component. Dit zorgt voor automatische optimalisatie van afbeeldingen, wat bijdraagt aan een snelle laadtijd op zowel desktop als mobiel.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Technische Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Framework:** [Next.js](https://nextjs.org/) (App Router)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Hosting:** [Netlify](https://www.netlify.com/)
+- **Versiebeheer:** [GitHub](https://github.com/)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📂 Project Structuur
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `app/`: Bevat de hoofdroutes en pagina's per artikel.
+- `components/`: Bevat herbruikbare UI-elementen zoals de Header en Footer.
+- `public/`: Bevat alle gebruikte afbeeldingen en media.
+
+---
+
+*Gemaakt door Chukurasomto voor AP Hogeschool Antwerpen - 2026*
