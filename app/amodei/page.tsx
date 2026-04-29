@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function AmodeiArticle() {
   return (
@@ -36,8 +37,13 @@ export default function AmodeiArticle() {
         </p>
 
         <figure className="mb-10">
-          <div className="w-full h-72 bg-gray-200 rounded-xl flex items-center justify-center text-gray-500 border border-gray-300">
-            [Ruimte voor Afbeelding: Portret Dario Amodei]
+          <div className="relative w-full h-72 sm:h-96 rounded-xl overflow-hidden border border-gray-300">
+            <Image
+              src="https://prod-img.standaard.be/public/nieuws/j980z3-gettyimages-2154161015-1.jpg/alternates/THREE_TWO_1620/GettyImages-2154161015%201.jpg"
+              alt="Portret van Dario Amodei"
+              fill
+              className="object-cover"
+            />
           </div>
           <figcaption className="text-sm text-gray-500 italic mt-3 text-center">
             Dario Amodei neemt heel nadrukkelijk een ethisch standpunt in over
